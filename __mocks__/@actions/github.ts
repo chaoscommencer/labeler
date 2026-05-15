@@ -1,7 +1,13 @@
 export const context = {
   payload: {
     pull_request: {
-      number: 123
+      number: 123,
+      head: {
+        ref: 'head-branch-name'
+      },
+      base: {
+        ref: 'base-branch-name'
+      }
     }
   },
   repo: {
@@ -13,11 +19,14 @@ export const context = {
 const mockApi = {
   rest: {
     issues: {
-      addLabels: jest.fn(),
-      removeLabel: jest.fn()
+      setLabels: jest.fn()
     },
     pulls: {
-      get: jest.fn().mockResolvedValue({}),
+      get: jest.fn().mockResolvedValue({
+        data: {
+          labels: []
+        }
+      }),
       listFiles: {
         endpoint: {
           merge: jest.fn().mockReturnValue({})
